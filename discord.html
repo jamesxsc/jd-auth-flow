@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Judd Discord Authentication</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        @font-face {font-family: "Arquitecta-Heavy"; src: url("//db.onlinewebfonts.com/t/6129275cd151590309a749d00eeaf8e6.eot"); src: url("//db.onlinewebfonts.com/t/6129275cd151590309a749d00eeaf8e6.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/6129275cd151590309a749d00eeaf8e6.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/6129275cd151590309a749d00eeaf8e6.woff") format("woff"), url("//db.onlinewebfonts.com/t/6129275cd151590309a749d00eeaf8e6.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/6129275cd151590309a749d00eeaf8e6.svg#ArquitectaW00-Heavy") format("svg"); }
+
+        * {
+            font-family: "Roboto", sans-serif;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            animation: background alternate infinite ease-in-out 5s;
+            text-align: center;
+        }
+
+        .container * {
+            z-index: 10;
+            transition: all .3s ease-in-out;
+        }
+
+        .container *:hover {
+            transform: scale(1.3);
+        }
+
+        .sign-in-button, .sign-in-button:active, .sign-in-button:visited, .sign-in-button:focus {
+            height: 7vh;
+            width: 300px;
+
+            font-size: 2rem;
+            text-transform: uppercase;
+            font-family: Arquitecta-Heavy, sans-serif;
+
+            outline: none;
+
+            background: transparent;
+            border: white 3px solid;
+
+            color: #ffffff;
+
+            transition: all .3s;
+        }
+
+        .proceed-text {
+            line-height: 150%;
+            font-size: 2rem;
+            text-transform: uppercase;
+            font-family: Arquitecta-Heavy, sans-serif;
+            color: #ffffff;
+        }
+
+        .sign-in-button:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        @keyframes background {
+            from {
+                background-color: #000000;
+            }
+            to {
+                background-color: #747474;
+            }
+        }
+        .background {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            flex-wrap: wrap;
+        }
+
+        .shape-1 {
+            width: 50px;
+            height: 50px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 5s infinite ease-in forwards;
+        }
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 4s infinite ease-in forwards;
+        }
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 2s infinite ease-in forwards;
+        }
+        .shape-4 {
+            width: 70px;
+            height: 70px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 3.5s infinite ease-in forwards;
+        }
+        .shape-5 {
+            width: 250px;
+            height: 250px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 2.5s infinite ease-in forwards;
+        }
+        .shape-6 {
+            width: 50px;
+            height: 50px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 5s infinite ease-in forwards;
+        }
+        .shape-7 {
+            width: 95px;
+            height: 95px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 3.9s infinite ease-in forwards;
+        }
+        .shape-8 {
+            width: 210px;
+            height: 210px;
+            border-radius: 20%;
+            background: #ffffff;
+            animation: shape 2.6s infinite ease-in forwards;
+        }
+
+        @keyframes shape {
+            from {
+                transform: translateY(100vh) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(0) scale(.3) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+<!--    oauth url-->
+    <button class="sign-in-button" id="sign-in-button" onclick="$('#proceed-text').html('Redirecting to Discord<br>Please wait');window.location='https://discord.com/api/oauth2/authorize?client_id=719272829367091291&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fdiscordrtn&response_type=code&scope=identify%20guilds.join'" >Connect Discord</button>
+    <h1 class="proceed-text" id="proceed-text" style="display: none;"></h1>
+</div>
+<div class="background">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+    <div class="shape shape-6"></div>
+    <div class="shape shape-7"></div>
+    <div class="shape shape-8"></div>
+</div>
+</body>
+</html>
