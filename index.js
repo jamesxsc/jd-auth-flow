@@ -20,7 +20,7 @@ app.use(cookieParser())
 const connection = mysql.createConnection({
     host: 'db.615283.net',
     user: 'judd_discord',
-    password: 'WonkyWood69',
+    password: '',
     database: 'jd'
 });
 
