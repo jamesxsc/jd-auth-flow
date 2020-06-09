@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Judd Discord Authentication</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%- defineContent('head') %>
     <style>
         @font-face {
             font-family: "Arquitecta-Heavy";
@@ -26,7 +28,7 @@
             justify-content: center;
             width: 100%;
             height: 100vh;
-            animation: background alternate infinite ease-in 5s;
+            animation: background alternate infinite ease-in-out 5s;
             text-align: center;
         }
 
@@ -39,12 +41,35 @@
             transform: scale(1.3);
         }
 
+        .sign-in-button, .sign-in-button:active, .sign-in-button:visited, .sign-in-button:focus {
+            height: 7vh;
+            width: 300px;
+
+            font-size: 2rem;
+            text-transform: uppercase;
+            font-family: Arquitecta-Heavy, sans-serif;
+
+            outline: none;
+
+            background: transparent;
+            border: white 3px solid;
+
+            color: #ffffff;
+
+            transition: all .3s;
+        }
+
         .proceed-text {
             line-height: 150%;
             font-size: 2rem;
             text-transform: uppercase;
             font-family: Arquitecta-Heavy, sans-serif;
             color: #ffffff;
+        }
+
+        .sign-in-button:hover {
+            background: #ffffff;
+            color: #000000;
         }
 
         @keyframes background {
@@ -145,32 +170,6 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <h1 class="proceed-text" id="proceed-text" style="display: none;"></h1>
-</div>
-<div class="background">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-    <div class="shape shape-4"></div>
-    <div class="shape shape-5"></div>
-    <div class="shape shape-6"></div>
-    <div class="shape shape-7"></div>
-    <div class="shape shape-8"></div>
-</div>
-<script>
-    //display status from query string
-    $(function () {
-            const status = new URLSearchParams(window.location.search).get('jd-status');
-            $('#proceed-text').html(status === '201' ? 'You have been added to the server<br>Check Discord' :
-                status === '204' ? 'You\'ve already joined the Discord server' :
-                    'An unexpected error occurred');
-            $('#proceed-text').css('display', 'block');
-
-            //remove auth session cookie
-            document.cookie = 'link_ref=; Max-Age=0; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.host
-        }
-    )
-</script>
+<%- defineContent('body') %>>
 </body>
 </html>

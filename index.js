@@ -2,6 +2,8 @@
 const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
 const express = require('express');
+const ejs = require('ejs');
+const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
@@ -15,12 +17,16 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser())
+app.set('view engine', 'ejs')
+app.set('views', __dirname + '/views')
+app.use(expressLayouts)
+app.set('layout', 'layout/master')
 
 // create my sql connection
 const connection = mysql.createConnection({
     host: 'db.615283.net',
     user: 'judd_discord',
-    password: 'WonkyWood69',
+    password: '',
     database: 'jd'
 });
 
@@ -43,7 +49,7 @@ var linkAttempts = {}
 
 // basic static get routes
 app.get('/link/google', function (req, res) {
-    res.sendFile(__dirname + '/google.html')
+    res.render('google');
 });
 
 app.get('/link/discord', function (req, res) {
@@ -51,11 +57,15 @@ app.get('/link/discord', function (req, res) {
         res.redirect('http://localhost:8080/link/google');
         return
     }
-    res.sendFile(__dirname + '/discord.html')
+    res.render('discord');
 });
 
 app.get('/success', function (req, res) {
-    res.sendFile(__dirname + '/success.html')
+    const status = req.query['jd-status'];
+    res.render('success', {
+        text: status === '201' ? 'You have been added to the Discord server<br>Check Discord' :
+            status === '204' ? 'You are already in the Discord server' : 'An unexpected error occurred<br>Please try again'
+    });
 });
 
 // this is where discord sends our users once they have authenticated

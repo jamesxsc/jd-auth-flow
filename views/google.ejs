@@ -1,0 +1,71 @@
+<%- contentFor('head') %>
+<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+<script>
+    const SCOPE = 'https://www.googleapis.com/auth/classroom.courses.readonly';
+
+    // load google api
+    function start() {
+        gapi.load('auth2', function () {
+            auth2 = gapi.auth2.init({
+                clientId: '875969714164-pjrm3cu65n6njqafkt2plaoiqt7jlo4s.apps.googleusercontent.com',
+                scope: SCOPE
+            });
+        });
+    }
+</script>
+
+<%- contentFor('body') %>
+<div class="container">
+    <button class="sign-in-button" id="sign-in-button">Connect Google</button>
+    <h1 class="proceed-text" id="proceed-text" style="display: none"></h1>
+</div>
+<div class="background">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+    <div class="shape shape-6"></div>
+    <div class="shape shape-7"></div>
+    <div class="shape shape-8"></div>
+</div>
+<script>
+    // add listener to button to begin google auth
+    $('#sign-in-button').click(function () {
+        $('#proceed-text').html('Follow instructions in Google popup');
+        $('#sign-in-button').css('display', 'none')
+        $('#proceed-text').css('display', 'block');
+        // launch popup
+        auth2.grantOfflineAccess().then(signInCallback);
+    });
+
+    function signInCallback(result) {
+        // if google has given us a code (success)
+        if (result['code']) {
+            $('#sign-in-button').prop('disabled', true);
+
+            // google has done its bit at the front end now
+            $('#proceed-text').html('Authorised<br>Please wait');
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/auth',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                contentType: 'application/json; charset=utf-8',
+                success: function (successResult) {
+                    // when backend gives us a session to proceed to discord auth
+                    window.location = 'http://localhost:8080/link/discord'
+                    document.cookie = `link_ref=${successResult}; path=/`;
+                    $('#proceed-text').html('Redirecting to Discord Authentication');
+                },
+                processData: false,
+                data: JSON.stringify(result)
+            })
+        } else {
+            // google didnt give us code so user did a bad auth
+            $('#proceed-text').html('Please refresh and try again');
+            console.log('An error occurred within the OAuth stage.')
+        }
+    }
+</script>
